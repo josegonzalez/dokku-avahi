@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+trigger-avahi-pre-delete() {
+  declare desc="avahi pre-delete plugin trigger"
+  declare trigger="pre-delete"
+  declare APP="$1"
+
+  /usr/bin/avahi-register remove --name "$APP"
+}
+
+trigger-avahi-pre-delete "$@"

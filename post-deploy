@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+trigger-avahi-post-deploy() {
+  declare desc="avahi post-deploy plugin trigger"
+  declare trigger="post-deploy"
+  declare APP="$1"
+
+  /usr/bin/avahi-register add --name "$APP"
+}
+
+trigger-avahi-post-deploy "$@"

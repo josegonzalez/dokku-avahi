@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+source "$PLUGIN_AVAILABLE_PATH/ps/functions"
+
+trigger-avahi-install() {
+  declare desc="avahi install plugin trigger"
+  declare trigger="install"
+  local SUDOERS_FILE="/etc/sudoers.d/dokku-avahi"
+
+  case "$DOKKU_DISTRO" in
+    debian | ubuntu)
+      echo "%dokku ALL=(ALL) NOPASSWD:/usr/bin/avahi-register *" >"$SUDOERS_FILE"
+      ;;
+  esac
+
+  chmod 0440 "$SUDOERS_FILE"
+
+  local APPS="$(dokku_apps)"
+  for APP in $APPS; do
+    if [[ "$(fn-ps-is-app-running "$APP")" == "true" ]]; then
+      /usr/bin/avahi-register add --name "$APP"
+    fi
+  done
+}
+
+trigger-avahi-install "$@"

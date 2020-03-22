@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+
+trigger-avahi-dependencies() {
+  declare desc="avahi dependencies plugin trigger"
+  declare trigger="dependencies"
+
+  case "$DOKKU_DISTRO" in
+    debian | ubuntu)
+      apt-get install -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" --force-yes -qq -y avahi-register
+      ;;
+  esac
+}
+
+trigger-avahi-dependencies "$@"
