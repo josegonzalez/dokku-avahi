@@ -1,4 +1,4 @@
 [plugin]
 description = "plugin for integrating with avahi"
-version = "0.19.13"
+version = "0.19.14"
 [plugin.config]
