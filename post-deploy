@@ -7,7 +7,7 @@ trigger-avahi-post-deploy() {
   declare trigger="post-deploy"
   declare APP="$1"
 
-  /usr/bin/avahi-register add --name "$APP"
+  sudo /usr/bin/avahi-register add --name "$APP"
 }
 
 trigger-avahi-post-deploy "$@"

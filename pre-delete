@@ -7,7 +7,7 @@ trigger-avahi-pre-delete() {
   declare trigger="pre-delete"
   declare APP="$1"
 
-  /usr/bin/avahi-register remove --name "$APP"
+  sudo /usr/bin/avahi-register remove --name "$APP"
 }
 
 trigger-avahi-pre-delete "$@"

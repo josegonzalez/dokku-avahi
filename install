@@ -20,7 +20,7 @@ trigger-avahi-install() {
   local APPS="$(dokku_apps)"
   for APP in $APPS; do
     if [[ "$(fn-ps-is-app-running "$APP")" == "true" ]]; then
-      /usr/bin/avahi-register add --name "$APP"
+      sudo /usr/bin/avahi-register add --name "$APP"
     fi
   done
 }
